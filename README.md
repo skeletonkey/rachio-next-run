@@ -1,12 +1,12 @@
 # Rachio Next Run Notifier
 
-Golang program that detects your the run of your next Rachio scheduled run and notifies you. It can also notify you when the run is complete.
+Golang program that detects your next Rachio scheduled run and notifies you. It can also send a notification when the run is complete.
 
-This exists because the author is lazy and needs to be reminder when to bypass the water softener and when to set it back.
+This program exists because the author is lazy and needs to be reminded when to bypass the water softener and when to set it back.
 
 ## WARNING
 
-This is not even at the 0.0.1 stage - do not use!
+The version is not even at the 0.0.1 stage - do not use it!
 
 ## Running
 
@@ -16,35 +16,35 @@ This is not even at the 0.0.1 stage - do not use!
 
 Location of your config JSON file.
 
-Example config is located at: `config/local.json`.
+An example config is located at: `config/local.json.`
 
 ## Config Variables
 
 ### Pushover.net
 
-Preferred service to sending notifications to your devices.
+Preferred service for sending notifications to your devices.
 
 ### Account Token
 
-This is your main 'User Key.'
+primary 'User Key.'
 
 ### Application Token
 
-This is the 'API Token/Key' that is generated for this application.
+'API Token/Key' generated for this application.
 
 ### Rachio
 
-The Rachio API is rate limited, appears to be tied to your 'Person ID', and appears to be capped at 1700 per day. Please be a good citizen.
+The Rachio API is rate limited, appears to be tied to your 'Person ID,' and is capped at 1700 per day. So please be a good citizen.
 
 #### bearer_token
 
-The Bearer Token to authorize HTTP requests to your device is the device's API Key.  It can be found with the following steps:
+The device's API Key is the Bearer Token to authorize HTTP requests to your device. Following these steps to get your key:
 
 https://app.rachio.io -> [select rachio device] -> Account Settings -> GET API KEY
 
 #### device_id
 
-The Device ID is determined by calls to the Rachio API.
+Determined by calls to the Rachio API.
 
 The following commands are run in a bash shell and assume you have `jq` installed:
 
