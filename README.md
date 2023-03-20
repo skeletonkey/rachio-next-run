@@ -8,7 +8,7 @@ This program exists because the author is lazy and needs to be reminded when to 
 
 The version is not even at the 0.0.1 stage - do not use it!
 
-## Running
+## Setup
 
 ### Environmental Variables
 
@@ -62,4 +62,21 @@ curl -X GET -H "Authorization:Bearer $RACHIO_TOKEN" https://api.rach.io/1/public
 export RACHIO_DEVICE="ID found from last command -> devices[0].id"
 
 curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer $RACHIO_TOKEN" https://api.rach.io/1/public/device/$RACHIO_DEVICE | jq .
+```
+## Building
+
+Build this on the machine you plan on running it on - or alter the commands with the appropriate platform args.
+
+NOTE: secrets configs will be addressed at a later time.  You will need to update config/local.json AND DO NOT CHECK IT BACK IN!!!
+
+```bash
+go build -o bin/rachio-next-run app/*.go
+```
+
+## Running
+
+Print out the App config data
+
+```bash
+./bin/rachion-next-run
 ```

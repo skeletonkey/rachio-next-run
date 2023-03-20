@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"rachionextrun/app/config"
 )
 
@@ -11,4 +12,5 @@ type app struct {
 func main() {
 	var appData app
 	config.LoadConfig("app", &appData)
+	fmt.Printf("App: %+v\n", appData)
 }
