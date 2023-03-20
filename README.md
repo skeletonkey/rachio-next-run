@@ -10,13 +10,13 @@ The version is not even at the 0.0.1 stage - do not use it!
 
 ## Running
 
-### Env Vars
+### Environmental Variables
 
 #### RACHIO_CONFIG_FILE
 
 Location of your config JSON file.
 
-An example config is located at: `config/local.json.`
+An example config is located at: `config/local.json`.
 
 ## Config Variables
 
@@ -24,17 +24,17 @@ An example config is located at: `config/local.json.`
 
 Preferred service for sending notifications to your devices.
 
-### Account Token
+#### Account Token
 
 primary 'User Key.'
 
-### Application Token
+#### Application Token
 
 'API Token/Key' generated for this application.
 
 ### Rachio
 
-The Rachio API is rate limited, appears to be tied to your 'Person ID,' and is capped at 1700 per day. So please be a good citizen.
+The Rachio API is rate limited, is tied to your 'Person ID,' and is capped at 1700 per day. So please be a good citizen.
 
 #### bearer_token
 
