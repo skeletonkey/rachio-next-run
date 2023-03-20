@@ -14,7 +14,6 @@ type config struct {
 }
 
 var cfg *config
-
 var lock = &sync.Mutex{}
 
 func (c config) getConfigFile() string {
