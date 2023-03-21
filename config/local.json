@@ -11,7 +11,11 @@
     "devices": [
       {
         "name": "My Home",
-        "device_id": "Device ID goes here"
+        "device_id": "Device ID goes here",
+        "hours": {
+          "after": 2,
+          "before": 12
+        }
       }
     ]
   },
