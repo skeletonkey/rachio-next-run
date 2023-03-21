@@ -4,9 +4,13 @@ Golang program that detects your next Rachio scheduled run and notifies you. It 
 
 This program exists because the author is lazy and needs to be reminded when to bypass the water softener and when to set it back.
 
+At this time this program is a 'script' meant to be run via a cron. Future evolution is a 'service' that will simply run and log appropriately.
+
 ## WARNING
 
-The version is not even at the 0.0.1 stage - do not use it!
+The version is 0.1.0 - it works, but things will change!
+
+"before" alerts work; after alters probably don't
 
 ## Setup
 
@@ -79,7 +83,7 @@ go build -o bin/rachio-next-run app/*.go
 
 ## Running
 
-Print out the App config data and Rachio next run information as well as 'alert' data.
+Print out the App config data, Rachio next run information as well as 'alert' data, and any Pushover information.
 
 ```bash
 ./bin/rachion-next-run
