@@ -20,6 +20,8 @@ An example config is located at: `config/local.json`.
 
 ## Config Variables
 
+At this time 'secrets' are written directly into the config file.  It is _HIGHLY_ recommended that you make a copy of `config/local.json` and place it somewhere outside of the repo.
+
 ### Pushover.net
 
 Preferred service for sending notifications to your devices.
@@ -36,17 +38,19 @@ primary 'User Key.'
 
 The Rachio API is rate limited, is tied to your 'Person ID,' and is capped at 1700 per day. So please be a good citizen.
 
+*IMPORTANT*: at this time only one rachio device is supported.  Support for multiple devices will be added at a later date.
+
 #### bearer_token
 
 The device's API Key is the Bearer Token to authorize HTTP requests to your device. Following these steps to get your key:
 
-https://app.rachio.io -> [select rachio device] -> Account Settings -> GET API KEY
+https://app.rachio.io/login -> [select rachio device] -> Account Settings -> GET API KEY
 
 #### device_id
 
 Determined by calls to the Rachio API.
 
-The following commands are run in a bash shell and assume you have `jq` installed:
+The following commands are run in a bash shell and assumes that `jq` is installed:
 
 ```bash
 export RACHIO_TOKEN="API TOKEN GOES HERE"
@@ -75,7 +79,7 @@ go build -o bin/rachio-next-run app/*.go
 
 ## Running
 
-Print out the App config data
+Print out the App config data and Rachio next run information as well as 'alert' data.
 
 ```bash
 ./bin/rachion-next-run

@@ -1,0 +1,5 @@
+# Ideas for the future
+
+* make rachio only a 'device' interface
+* create an 'alerts' package that deals with figuring out what alert is triggered and what the alter looks like
+* allow for multiple rachio devices
