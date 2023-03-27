@@ -5,26 +5,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"rachionextrun/app/config"
 )
-
-type token struct {
-	Account     string `json:"account"`
-	Application string `json:"application"`
-}
-type pushover struct {
-	Url   string `json:"url"`
-	Token token  `json:"token"`
-}
-
-var client *pushover
-
-func getClient() *pushover {
-	if client == nil {
-		config.LoadConfig("pushover", &client)
-	}
-	return client
-}
 
 func Notify(msg string) {
 	client := getClient()
