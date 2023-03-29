@@ -1,7 +1,7 @@
 package instance_gen
 
 import (
-	"fmt"
+	"github.com/rs/zerolog/log"
 	"os"
 	"path"
 	"text/template"
@@ -25,18 +25,20 @@ func (a app) WithClients(clientNames ...string) app {
 }
 
 func (a app) generateTemplate(templateName string, clientName string) {
-	inputFileName := path.Join(templateDir, templateName + ".go.tpl")
+	inputFileName := path.Join(templateDir, templateName+".go.tpl")
 	outputDir := path.Join(a.dir, clientName)
-	outputFileName := path.Join(outputDir, templateName + ".go")
+	outputFileName := path.Join(outputDir, templateName+".go")
 
-	//fmt.Printf("Creating Dir: %s\n", outputDir)
+	log.Debug().Str("outputDir", outputDir)
 	os.MkdirAll(outputDir, 0755)
-	//fmt.Printf("Creating File: %s\n", outputFileName)
+	log.Debug().Str("creating file", outputFileName)
 	f, err := os.Create(outputFileName)
 	f.WriteString(warning)
 	defer f.Close()
 	if err != nil {
-		panic(fmt.Errorf("unable to create file (%s): %s", outputFileName, err))
+		log.Panic().Err(err).
+			Str("outputFilename", outputFileName).
+			Msg("unable to create new file")
 	}
 	temp := template.Must(template.ParseFiles(inputFileName))
 	temp.Execute(f, clientName)

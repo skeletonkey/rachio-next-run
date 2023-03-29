@@ -4,3 +4,6 @@
 * create an 'alerts' package that deals with figuring out what alert is triggered and what the alter looks like
 * allow for multiple rachio devices
 * make pushover a 'transport'??? interface
+* change client.go.tpl getClient to something indicating client's config
+* turn logger into 'function' calls so that config updates can happen without restart
+* Add Healthcheck - investigate `buildinfo` in logger module

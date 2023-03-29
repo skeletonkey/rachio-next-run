@@ -1,6 +1,12 @@
 {
   "app": {
-    "log_level": "debug"
+  },
+  "logger": {
+    "log_file": "/var/log/rachio-next-run.log",
+    "log_level": "debug",
+    "to_file": true,
+    "to_stderr": true,
+    "to_stdout": true
   },
   "rachio" : {
     "url": {
