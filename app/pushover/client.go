@@ -5,7 +5,7 @@ import "rachionextrun/app/config"
 
 var client *pushover
 
-func getClient() *pushover {
+func getConfig() *pushover {
 	if client == nil {
 		config.LoadConfig("pushover", &client)
 	}

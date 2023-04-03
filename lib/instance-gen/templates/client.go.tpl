@@ -4,7 +4,7 @@ import "rachionextrun/app/config"
 
 var client *{{ . }}
 
-func getClient() *{{ . }} {
+func getConfig() *{{ . }} {
 	if client == nil {
 		config.LoadConfig("{{ . }}", &client)
 	}

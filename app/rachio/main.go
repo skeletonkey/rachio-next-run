@@ -13,7 +13,7 @@ import (
 // GetNextScheduledRun is overloaded and will be replaced
 // returns number of hours, 'after' or 'before', bool to indicate if you should alert or not
 func GetNextScheduledRun() (diffHrs int, alertType string, alert bool) {
-	client := getClient()
+	client := getConfig()
 	log := logger.Get()
 	url := fmt.Sprintf("%s/device/getDeviceState/%s", client.Url.Internal, client.Devices[0].Id)
 	log.Debug().Str("URL", url).Msg("Connect to Rachio")

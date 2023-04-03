@@ -5,7 +5,7 @@ import "rachionextrun/app/config"
 
 var client *rachio
 
-func getClient() *rachio {
+func getConfig() *rachio {
 	if client == nil {
 		config.LoadConfig("rachio", &client)
 	}

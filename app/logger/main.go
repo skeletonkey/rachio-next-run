@@ -18,7 +18,7 @@ var log zerolog.Logger
 
 func Get() zerolog.Logger {
 	once.Do(func() {
-		config := getClient()
+		config := getConfig()
 		zerolog.ErrorStackMarshaler = pkgerrors.MarshalStack
 		zerolog.TimeFieldFormat = time.RFC3339Nano
 
