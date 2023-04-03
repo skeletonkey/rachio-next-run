@@ -5,7 +5,7 @@ import "rachionextrun/app/config"
 
 var client *logger
 
-func getClient() *logger {
+func getConfig() *logger {
 	if client == nil {
 		config.LoadConfig("logger", &client)
 	}

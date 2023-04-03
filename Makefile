@@ -1,4 +1,6 @@
 build:
+	go fmt ./...
+	go vet ./...
 	go build -o bin/rachio-next-run app/*.go
 
 install:

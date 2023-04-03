@@ -9,7 +9,7 @@ import (
 )
 
 func Notify(msg string) {
-	client := getClient()
+	client := getConfig()
 	log := logger.Get()
 	requestUrl := fmt.Sprintf("%s/messages.json?token=%s&user=%s&message=%s",
 		client.Url, client.Token.Account, client.Token.Application, url.QueryEscape(msg))
