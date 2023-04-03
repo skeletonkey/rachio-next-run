@@ -6,5 +6,5 @@ import "rachionextrun/lib/instance-gen"
 
 func main() {
 	app := instance_gen.NewApp("app")
-	app.WithClients("pushover", "rachio")
+	app.WithClients("logger", "pushover", "rachio")
 }

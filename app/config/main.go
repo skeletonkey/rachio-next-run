@@ -13,17 +13,26 @@ type config struct {
 	configs    configMapType // map containing json representation of each high level key
 }
 
+const configFileString = "RACHIO_CONFIG_FILE"
+
 var cfg *config
 var lock = &sync.Mutex{}
 
 func (c config) getConfigFile() string {
 	if c.configFile == "" {
 		// TODO: better way to get config file location
-		c.configFile = os.Getenv("RACHIO_CONFIG_FILE")
+		if filename := os.Getenv(configFileString); filename == "" {
+			panic(fmt.Errorf("env var %s is not set", configFileString))
+		} else {
+			c.configFile = filename
+		}
 	}
 	return c.configFile
 }
 
+// getConfig returns the internal cfg object (creating it if needed)
+// This method is usally called first and the application can not run without this information.  Since any errors
+// encountered here are faital, panic is used instead of any type of error return or logging.
 func getConfig() *config {
 	if cfg == nil {
 		lock.Lock()
@@ -35,27 +44,23 @@ func getConfig() *config {
 
 		rawData, err := os.ReadFile(cfg.getConfigFile())
 		if err != nil {
-			//	TODO: logging will happen later
-			panic(err)
+			panic(fmt.Errorf("unable to open config file (%s): %s", cfg.getConfigFile(), err))
 		}
 
 		if !json.Valid(rawData) {
-			// TODO: logging
-			panic(fmt.Errorf("invalid JSON in %s", cfg.getConfigFile()))
+			panic(fmt.Errorf("invalid JSON found in file (%s)", cfg.getConfigFile()))
 		}
 
 		data := map[string]interface{}{}
 		err = json.Unmarshal(rawData, &data)
 		if err != nil {
-			//	TODO: logging will happen later
-			panic(err)
+			panic(fmt.Errorf("unable to unmarshal config file (%s): %s", cfg.getConfigFile(), err))
 		}
 
 		for key, value := range data {
 			valueJson, err := json.Marshal(value)
 			if err != nil {
-				//	TODO: logging will happen later
-				panic(err)
+				panic(fmt.Errorf("unable to marchal key (%s) data: %s", key, err))
 			}
 
 			cfg.configs[key] = valueJson
@@ -70,7 +75,7 @@ func LoadConfig(name string, configStruct interface{}) {
 
 	configData, ok := cfg.configs[name]
 	if !ok {
-		panic(fmt.Errorf("%s does not exist in the config file %s", name, cfg.configFile))
+		panic(fmt.Errorf("key (%s) not found in config file (%s)", name, cfg.getConfigFile()))
 	}
 	json.Unmarshal(configData, &configStruct)
 }

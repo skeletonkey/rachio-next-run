@@ -5,28 +5,27 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"rachionextrun/app/logger"
 )
 
 func Notify(msg string) {
 	client := getClient()
+	log := logger.Get()
 	requestUrl := fmt.Sprintf("%s/messages.json?token=%s&user=%s&message=%s",
 		client.Url, client.Token.Account, client.Token.Application, url.QueryEscape(msg))
-	fmt.Printf("Notification URL: %s", requestUrl)
+	log.Debug().Str("URL", requestUrl).Msg("notification URL")
 	res, err := http.Post(requestUrl, "application/json", nil)
 	if err != nil {
-		panic(err)
-	}
-	if err != nil {
-		panic(err)
+		log.Panic().Err(err).Str("URL", requestUrl).Msg("unable to post to url")
 	}
 	defer res.Body.Close()
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
-		panic(err)
+		log.Panic().Err(err).Interface("response", res).Msg("unable to read response body")
 	}
 	if res.StatusCode != 200 {
-		panic(fmt.Errorf("non 200 code received from Notify call: (%d) %s", res.StatusCode, string(body[:])))
+		log.Panic().Int("Status Code", res.StatusCode).Bytes("response body", body).Msg("non-200 response received")
 	}
 
-	fmt.Printf("Response: %s\n", string(body[:]))
+	log.Info().Bytes("response body", body).Msg("pushover response")
 }

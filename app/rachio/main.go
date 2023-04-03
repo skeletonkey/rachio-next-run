@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"rachionextrun/app/logger"
 	"time"
 )
 
@@ -13,37 +14,46 @@ import (
 // returns number of hours, 'after' or 'before', bool to indicate if you should alert or not
 func GetNextScheduledRun() (diffHrs int, alertType string, alert bool) {
 	client := getClient()
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/device/getDeviceState/%s", client.Url.Internal, client.Devices[0].Id), nil)
+	log := logger.Get()
+	url := fmt.Sprintf("%s/device/getDeviceState/%s", client.Url.Internal, client.Devices[0].Id)
+	log.Debug().Str("URL", url).Msg("Connect to Rachio")
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		panic(err)
+		log.Panic().Err(err).Str("URL", url).Msg("unable to create new http request")
 	}
 	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", client.BearerToken))
 	req.Header.Add("Content-Type", "application/json")
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
-		panic(err)
+		log.Panic().Err(err).Str("URL", url).Msg("unable to execute http request")
 	}
 	defer res.Body.Close()
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
-		panic(err)
+		log.Panic().Err(err).Interface("response", res).Msg("unable to read response Body")
 	}
 	if res.StatusCode != 200 {
-		panic(fmt.Errorf("non 200 code received from GetNextScheduledRun call: (%d) %s", res.StatusCode, string(body[:])))
+		log.Panic().Int("status code", res.StatusCode).Bytes("body", body).Msg("non-200 response code")
 	}
 
-	fmt.Printf("Response: %s\n", string(body[:]))
+	log.Debug().Bytes("response", body).Msg("Rachio response received")
 	var nextRunData nextRun
 	json.Unmarshal(body, &nextRunData)
-	fmt.Printf("Unmarshalled: %+v\n", nextRunData)
+	log.Debug().Interface("un-marshalled body", nextRunData).Msg("Parsed body")
 
 	if client.Devices[0].Id != nextRunData.State.DeviceId {
-		panic(fmt.Errorf("device IDs do not match: %s - %s", client.Devices[0].Id, nextRunData.State.DeviceId))
+		log.Panic().
+			Str("local device ID", client.Devices[0].Id).
+			Str("response device ID", nextRunData.State.DeviceId).
+			Msg("devices IDs mismatch")
 	}
 
 	t, err := time.Parse(time.RFC3339, nextRunData.State.NextRun)
 	if err != nil {
-		panic(err)
+		log.Panic().
+			Err(err).
+			Str("next run", nextRunData.State.NextRun).
+			Msg("unable to parse time/date")
 	}
 
 	curTime := time.Now()
@@ -57,7 +67,11 @@ func GetNextScheduledRun() (diffHrs int, alertType string, alert bool) {
 		alertType = "before"
 		diffHrs = int(diff / time.Hour)
 	}
-	fmt.Printf("Current time: %s\nNext Run time: %s\nDifference: %d (%d Hours)\n", curTime.String(), t.String(), diff, diffHrs)
+	log.Info().Str("current time", curTime.String()).
+		Str("next run time", t.String()).
+		Dur("difference microseconds", diff).
+		Int("difference hours", diffHrs).
+		Msg("Rachio actionable information")
 	if diff < time.Duration(client.Devices[0].Hours[alertType])*time.Hour {
 		alert = true
 	}
