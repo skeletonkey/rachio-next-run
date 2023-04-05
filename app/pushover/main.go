@@ -12,13 +12,17 @@ import (
 func Notify(msg string) {
 	client := getConfig()
 	log := logger.Get()
-	requestURL := fmt.Sprintf("%s/messages.json?token=%s&user=%s&message=%s",
-		client.URL, client.Token.Account, client.Token.Application, url.QueryEscape(msg))
-	log.Debug().Str("URL", requestURL).Msg("notification URL")
-	res, err := http.Post(requestURL, "application/json", nil)
-	if err != nil {
-		log.Panic().Err(err).Str("URL", requestURL).Msg("unable to post to url")
-	}
+	requestUrl := fmt.Sprintf("%s/messages.json?token=%s&user=%s&message=%s",
+		client.Url, client.Token.Account, client.Token.Application, url.QueryEscape(msg))
+	log.Debug().Str("URL", requestUrl).Msg("notification URL")
+	if !client.Enabled {
+		log.Info().Msg("Pushover is disabled")
+	} else {
+		res, err := http.Post(requestUrl, "application/json", nil)
+		if err != nil {
+			log.Panic().Err(err).Str("URL", requestUrl).Msg("unable to post to url")
+		}
+		body, err := io.ReadAll(res.Body)
 	defer func() {
 		err := res.Body.Close()
 		if err != nil {
@@ -27,13 +31,13 @@ func Notify(msg string) {
 				Msg("unable to close response body")
 		}
 	}()
-	body, err := io.ReadAll(res.Body)
-	if err != nil {
-		log.Panic().Err(err).Interface("response", res).Msg("unable to read response body")
-	}
-	if res.StatusCode != 200 {
-		log.Panic().Int("Status Code", res.StatusCode).Bytes("response body", body).Msg("non-200 response received")
-	}
+		if err != nil {
+			log.Panic().Err(err).Interface("response", res).Msg("unable to read response body")
+		}
+		if res.StatusCode != 200 {
+			log.Panic().Int("Status Code", res.StatusCode).Bytes("response body", body).Msg("non-200 response received")
+		}
 
-	log.Info().Bytes("response body", body).Msg("pushover response")
+		log.Info().Bytes("response body", body).Msg("pushover response")
+	}
 }
