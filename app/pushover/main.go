@@ -10,12 +10,12 @@ import (
 
 // Notify sends `msg` using the Pushover API
 func Notify(msg string) {
-	client := getConfig()
+	config := getConfig()
 	log := logger.Get()
 	requestUrl := fmt.Sprintf("%s/messages.json?token=%s&user=%s&message=%s",
-		client.Url, client.Token.Account, client.Token.Application, url.QueryEscape(msg))
+		config.Url, config.Token.Account, config.Token.Application, url.QueryEscape(msg))
 	log.Debug().Str("URL", requestUrl).Msg("notification URL")
-	if !client.Enabled {
+	if !config.Enabled {
 		log.Info().Msg("Pushover is disabled")
 	} else {
 		res, err := http.Post(requestUrl, "application/json", nil)

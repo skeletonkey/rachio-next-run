@@ -13,11 +13,11 @@ import (
 // GetNextScheduledRuns is overloaded and will be replaced
 // returns number of hours, 'after' or 'before', bool to indicate if you should alert or not
 func GetNextScheduledRuns() []NextScheduleData {
-	client := getConfig()
+	config := getConfig()
 
 	scheduleData := make([]NextScheduleData, 0)
 
-	for _, device := range client.Devices {
+	for _, device := range config.Devices {
 		diff, alertType, alert := getNextScheduleData(device)
 		scheduleData = append(scheduleData,
 			NextScheduleData{device.Name, diff, alertType, alert})
@@ -28,6 +28,7 @@ func GetNextScheduledRuns() []NextScheduleData {
 
 func getNextScheduleData(d device) (diffHrs int, alertType string, alert bool) {
 	log := logger.Get()
+	config := getConfig()
 
 	url := fmt.Sprintf("%s/device/getDeviceState/%s", client.URL.Internal, d.ID)
 	log.Debug().Str("URL", url).Msg("Connect to Rachio")
@@ -35,7 +36,7 @@ func getNextScheduleData(d device) (diffHrs int, alertType string, alert bool) {
 	if err != nil {
 		log.Panic().Err(err).Str("URL", url).Msg("unable to create new http request")
 	}
-	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", client.BearerToken))
+	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", config.BearerToken))
 	req.Header.Add("Content-Type", "application/json")
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {

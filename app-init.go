@@ -9,5 +9,5 @@ import (
 
 func main() {
 	app := instance_gen.NewApp("app")
-	app.WithClients("logger", "pushover", "rachio")
+	app.WithModules("logger", "pushover", "rachio")
 }

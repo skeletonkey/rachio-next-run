@@ -3,11 +3,13 @@ package pushover
 
 import "rachionextrun/app/config"
 
-var client *pushover
+var cfg *pushover
 
 func getConfig() *pushover {
-	if client == nil {
-		config.LoadConfig("pushover", &client)
-	}
-	return client
+	config.LoadConfig("pushover", &cfg)
+	return cfg
+}
+
+func reInitialize() bool {
+	return config.Reset("pushover")
 }

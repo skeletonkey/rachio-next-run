@@ -3,11 +3,13 @@ package rachio
 
 import "rachionextrun/app/config"
 
-var client *rachio
+var cfg *rachio
 
 func getConfig() *rachio {
-	if client == nil {
-		config.LoadConfig("rachio", &client)
-	}
-	return client
+	config.LoadConfig("rachio", &cfg)
+	return cfg
+}
+
+func reInitialize() bool {
+	return config.Reset("rachio")
 }
