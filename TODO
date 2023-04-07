@@ -2,7 +2,6 @@
 
 * make rachio only a 'device' interface
 * create an 'alerts' package that deals with figuring out what alert is triggered and what the alter looks like
-* allow for multiple rachio devices
 * make pushover a 'transport'??? interface
 * turn logger into 'function' calls so that config updates can happen without restart
 * allow for refreshing the config data automatically every X seconds or X minutes

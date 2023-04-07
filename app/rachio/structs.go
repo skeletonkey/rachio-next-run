@@ -21,3 +21,10 @@ type deviceStateType struct {
 type nextRun struct {
 	State deviceStateType `json:"state"`
 }
+
+type NextScheduleData struct {
+	DeviceName string
+	HoursUntil int
+	AlertType  string
+	Alert      bool
+}
