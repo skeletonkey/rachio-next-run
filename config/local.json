@@ -8,6 +8,14 @@
     "to_stderr": true,
     "to_stdout": true
   },
+  "healthcheck": {
+    "address": ":8888",
+    "end_point": "/healthcheck",
+    "visible": {
+      "dependencies": true,
+      "settings": true
+    }
+  },
   "rachio" : {
     "url": {
       "public": "https://api.rach.io/1/public",

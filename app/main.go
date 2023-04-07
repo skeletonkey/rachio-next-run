@@ -3,6 +3,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/skeletonkey/lib-core-go/config"
 	"github.com/skeletonkey/lib-core-go/logger"
@@ -20,6 +21,9 @@ func main() {
 	log := logger.Get()
 	log.Info().Msg("Starting app")
 
+	healthcheck.Healthcheck()
+
+	time.Sleep(10 * time.Minute)
 	log.Debug().Interface("application Config", appData).Msg("App Data")
 
 	for _, nextRun := range rachio.GetNextScheduledRuns() {
