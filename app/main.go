@@ -19,16 +19,20 @@ func main() {
 	log.Info().Msg("Starting app")
 
 	log.Debug().Interface("application Config", appData).Msg("App Data")
-	timeUntil, alertType, alert := rachio.GetNextScheduledRun()
-	log.Debug().Int("hours until next run", timeUntil).
-		Str("alert type", alertType).
-		Bool("Notify", alert).
-		Msg("Rachio data")
-	if alert {
-		if alertType == "after" {
-			pushover.Notify("Scheduled watering has completed")
-		} else {
-			pushover.Notify(fmt.Sprintf("Next scheduled watering is %d hour(s) away", timeUntil))
+
+	for _, nextRun := range rachio.GetNextScheduledRuns() {
+		log.Debug().
+			Str("device name", nextRun.DeviceName).
+			Int("hours until next run", nextRun.HoursUntil).
+			Str("alert type", nextRun.AlertType).
+			Bool("Notify", nextRun.Alert).
+			Msg("Rachio data")
+		if nextRun.Alert {
+			if nextRun.AlertType == "after" {
+				pushover.Notify(fmt.Sprintf("%s: Scheduled watering has completed", nextRun.DeviceName))
+			} else {
+				pushover.Notify(fmt.Sprintf("%s: Next scheduled watering is %d hour(s) away", nextRun.DeviceName, nextRun.HoursUntil))
+			}
 		}
 	}
 

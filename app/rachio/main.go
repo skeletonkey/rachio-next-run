@@ -10,12 +10,26 @@ import (
 	"time"
 )
 
-// GetNextScheduledRun is overloaded and will be replaced
+// GetNextScheduledRuns is overloaded and will be replaced
 // returns number of hours, 'after' or 'before', bool to indicate if you should alert or not
-func GetNextScheduledRun() (diffHrs int, alertType string, alert bool) {
+func GetNextScheduledRuns() []NextScheduleData {
 	client := getConfig()
+
+	scheduleData := make([]NextScheduleData, 0)
+
+	for _, device := range client.Devices {
+		diff, alertType, alert := getNextScheduleData(device)
+		scheduleData = append(scheduleData,
+			NextScheduleData{device.Name, diff, alertType, alert})
+	}
+
+	return scheduleData
+}
+
+func getNextScheduleData(d device) (diffHrs int, alertType string, alert bool) {
 	log := logger.Get()
-	url := fmt.Sprintf("%s/device/getDeviceState/%s", client.Url.Internal, client.Devices[0].Id)
+
+	url := fmt.Sprintf("%s/device/getDeviceState/%s", client.Url.Internal, d.Id)
 	log.Debug().Str("URL", url).Msg("Connect to Rachio")
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -41,9 +55,9 @@ func GetNextScheduledRun() (diffHrs int, alertType string, alert bool) {
 	json.Unmarshal(body, &nextRunData)
 	log.Debug().Interface("un-marshalled body", nextRunData).Msg("Parsed body")
 
-	if client.Devices[0].Id != nextRunData.State.DeviceId {
+	if d.Id != nextRunData.State.DeviceId {
 		log.Panic().
-			Str("local device ID", client.Devices[0].Id).
+			Str("local device ID", d.Id).
 			Str("response device ID", nextRunData.State.DeviceId).
 			Msg("devices IDs mismatch")
 	}
@@ -61,18 +75,18 @@ func GetNextScheduledRun() (diffHrs int, alertType string, alert bool) {
 	if curTime.After(t) {
 		diff = curTime.Sub(t)
 		alertType = "after"
-		diffHrs = int(diff / time.Hour)
+		diffHrs = int(diff.Hours())
 	} else {
 		diff = t.Sub(curTime)
 		alertType = "before"
-		diffHrs = int(diff / time.Hour)
+		diffHrs = int(diff.Hours())
 	}
 	log.Info().Str("current time", curTime.String()).
 		Str("next run time", t.String()).
 		Dur("difference microseconds", diff).
 		Int("difference hours", diffHrs).
 		Msg("Rachio actionable information")
-	if diff < time.Duration(client.Devices[0].Hours[alertType])*time.Hour {
+	if diff < time.Duration(d.Hours[alertType])*time.Hour {
 		alert = true
 	}
 
