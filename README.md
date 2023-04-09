@@ -42,8 +42,6 @@ primary 'User Key.'
 
 The Rachio API is rate limited, is tied to your 'Person ID,' and is capped at 1700 per day. So please be a good citizen.
 
-_IMPORTANT_: at this time only one rachio device is supported.  Support for multiple devices will be added at a later date.
-
 #### bearer_token
 
 The device's API Key is the Bearer Token to authorize HTTP requests to your device. Following these steps to get your key:
@@ -74,7 +72,7 @@ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer $RACHI
 
 ## Building
 
-Build this on the machine you plan on running it on - or alter the commands with the appropriate platform args.
+Build this on the machine that you plan on running it on - or alter the commands with the appropriate platform args.
 
 NOTE: secrets configs will be addressed at a later time.  You will need to update config/local.json AND DO NOT CHECK IT BACK IN!!!
 
@@ -84,7 +82,7 @@ make
 
 ## Running
 
-Print out the App config data, Rachio next run information as well as 'alert' data, and any Pushover information.
+Print out the App config data, Rachio next run information as well as 'alert' data, and any Pushover information (depending on your log level).
 
 ```bash
 ./bin/rachion-next-run
