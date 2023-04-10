@@ -6,6 +6,6 @@ type token struct {
 }
 type pushover struct {
 	Enabled bool   `json:"enabled"`
-	URL   string `json:"url"`
-	Token token  `json:"token"`
+	URL     string `json:"url"`
+	Token   token  `json:"token"`
 }

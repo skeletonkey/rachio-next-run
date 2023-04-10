@@ -5,7 +5,8 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"rachionextrun/app/logger"
+
+	"github.com/skeletonkey/rachio-next-run/app/logger"
 )
 
 // Notify sends `msg` using the Pushover API
@@ -13,7 +14,7 @@ func Notify(msg string) {
 	config := getConfig()
 	log := logger.Get()
 	requestUrl := fmt.Sprintf("%s/messages.json?token=%s&user=%s&message=%s",
-		config.Url, config.Token.Account, config.Token.Application, url.QueryEscape(msg))
+		config.URL, config.Token.Account, config.Token.Application, url.QueryEscape(msg))
 	log.Debug().Str("URL", requestUrl).Msg("notification URL")
 	if !config.Enabled {
 		log.Info().Msg("Pushover is disabled")
@@ -23,14 +24,14 @@ func Notify(msg string) {
 			log.Panic().Err(err).Str("URL", requestUrl).Msg("unable to post to url")
 		}
 		body, err := io.ReadAll(res.Body)
-	defer func() {
-		err := res.Body.Close()
-		if err != nil {
-			log.Error().
-				Err(err).
-				Msg("unable to close response body")
-		}
-	}()
+		defer func() {
+			err := res.Body.Close()
+			if err != nil {
+				log.Error().
+					Err(err).
+					Msg("unable to close response body")
+			}
+		}()
 		if err != nil {
 			log.Panic().Err(err).Interface("response", res).Msg("unable to read response body")
 		}

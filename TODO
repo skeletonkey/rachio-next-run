@@ -6,3 +6,7 @@
 * turn logger into 'function' calls so that config updates can happen without restart
 * allow for refreshing the config data automatically every X seconds or X minutes
 * Add Healthcheck - investigate `buildinfo` in logger module
+* move .github/workflows to codegen
+* fix app/logger in-memory replacement issue - see TODO comment in Initialize method
+* do we have to 'register' Initializers??? Should we be able to say Initialize if you're an Initializer
+* if someone breaks the config file while things are running we should be logging the errors and not panicking

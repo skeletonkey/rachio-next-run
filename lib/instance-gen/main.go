@@ -25,7 +25,7 @@ func NewApp(dir string) App {
 	return App{dir: dir}
 }
 
-func (a App) WithModules(moduleNames ...string) app {
+func (a App) WithModules(moduleNames ...string) App {
 	for _, name := range moduleNames {
 		a.generateTemplate("config", name)
 	}

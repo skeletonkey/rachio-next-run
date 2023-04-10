@@ -6,14 +6,20 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"rachionextrun/app/logger"
 	"time"
+
+	"github.com/skeletonkey/rachio-next-run/app/logger"
 )
 
 // GetNextScheduledRuns is overloaded and will be replaced
 // returns number of hours, 'after' or 'before', bool to indicate if you should alert or not
 func GetNextScheduledRuns() []NextScheduleData {
 	config := getConfig()
+	if !config.Enabled {
+		log := logger.Get()
+		log.Info().Msg("Rachio is disabled")
+		return nil
+	}
 
 	scheduleData := make([]NextScheduleData, 0)
 
@@ -30,7 +36,7 @@ func getNextScheduleData(d device) (diffHrs int, alertType string, alert bool) {
 	log := logger.Get()
 	config := getConfig()
 
-	url := fmt.Sprintf("%s/device/getDeviceState/%s", client.URL.Internal, d.ID)
+	url := fmt.Sprintf("%s/device/getDeviceState/%s", config.URL.Internal, d.ID)
 	log.Debug().Str("URL", url).Msg("Connect to Rachio")
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {

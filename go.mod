@@ -1,4 +1,4 @@
-module rachionextrun
+module github.com/skeletonkey/rachio-next-run
 
 go 1.20
 

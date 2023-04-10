@@ -8,7 +8,3 @@ func getConfig() *{{ . }} {
 	config.LoadConfig("{{ . }}", &cfg)
 	return cfg
 }
-
-func reInitialize() bool {
-	return config.Reset("{{ . }}")
-}
