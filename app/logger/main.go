@@ -2,20 +2,22 @@ package logger
 
 import (
 	"fmt"
-	"github.com/natefinch/lumberjack"
-	"github.com/rs/zerolog"
-	"github.com/rs/zerolog/pkgerrors"
 	"io"
 	"os"
 	"runtime/debug"
 	"sync"
 	"time"
+
+	"github.com/natefinch/lumberjack"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/pkgerrors"
 )
 
 var once sync.Once
 
 var log zerolog.Logger
 
+// Get an instance of zerolog.Logger with the appropriate configured settings.
 func Get() zerolog.Logger {
 	once.Do(func() {
 		config := getConfig()

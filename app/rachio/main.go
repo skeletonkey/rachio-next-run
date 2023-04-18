@@ -29,7 +29,7 @@ func GetNextScheduledRuns() []NextScheduleData {
 func getNextScheduleData(d device) (diffHrs int, alertType string, alert bool) {
 	log := logger.Get()
 
-	url := fmt.Sprintf("%s/device/getDeviceState/%s", client.Url.Internal, d.Id)
+	url := fmt.Sprintf("%s/device/getDeviceState/%s", client.URL.Internal, d.ID)
 	log.Debug().Str("URL", url).Msg("Connect to Rachio")
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -41,7 +41,12 @@ func getNextScheduleData(d device) (diffHrs int, alertType string, alert bool) {
 	if err != nil {
 		log.Panic().Err(err).Str("URL", url).Msg("unable to execute http request")
 	}
-	defer res.Body.Close()
+	defer func() {
+		err := res.Body.Close()
+		if err != nil {
+			log.Error().Interface("response", res).Err(err).Msg("Unable to close body for response")
+		}
+	}()
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
 		log.Panic().Err(err).Interface("response", res).Msg("unable to read response Body")
@@ -52,13 +57,19 @@ func getNextScheduleData(d device) (diffHrs int, alertType string, alert bool) {
 
 	log.Debug().Bytes("response", body).Msg("Rachio response received")
 	var nextRunData nextRun
-	json.Unmarshal(body, &nextRunData)
+	err = json.Unmarshal(body, &nextRunData)
+	if err != nil {
+		log.Panic().
+			Bytes("response", body).
+			Err(err).
+			Msg("unable to unmarshal body")
+	}
 	log.Debug().Interface("un-marshalled body", nextRunData).Msg("Parsed body")
 
-	if d.Id != nextRunData.State.DeviceId {
+	if d.ID != nextRunData.State.DeviceID {
 		log.Panic().
-			Str("local device ID", d.Id).
-			Str("response device ID", nextRunData.State.DeviceId).
+			Str("local device ID", d.ID).
+			Str("response device ID", nextRunData.State.DeviceID).
 			Msg("devices IDs mismatch")
 	}
 
@@ -90,5 +101,5 @@ func getNextScheduleData(d device) (diffHrs int, alertType string, alert bool) {
 		alert = true
 	}
 
-	return
+	return diffHrs, alertType, alert
 }
