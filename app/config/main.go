@@ -1,3 +1,4 @@
+// Package config is my version of configuration injection which supports hot reloads.
 package config
 
 import (
@@ -31,8 +32,8 @@ func (c config) getConfigFile() string {
 }
 
 // getConfig returns the internal cfg object (creating it if needed)
-// This method is usally called first and the application can not run without this information.  Since any errors
-// encountered here are faital, panic is used instead of any type of error return or logging.
+// This method is usually called first and the application can not run without this information.  Since any errors
+// encountered here are fatal, panic is used instead of any type of error return or logging.
 func getConfig() *config {
 	if cfg == nil {
 		lock.Lock()
@@ -58,18 +59,19 @@ func getConfig() *config {
 		}
 
 		for key, value := range data {
-			valueJson, err := json.Marshal(value)
+			valueJSON, err := json.Marshal(value)
 			if err != nil {
 				panic(fmt.Errorf("unable to marchal key (%s) data: %s", key, err))
 			}
 
-			cfg.configs[key] = valueJson
+			cfg.configs[key] = valueJSON
 		}
 	}
 
 	return cfg
 }
 
+// LoadConfig loads the 'top level' config JSON into the provide struct
 func LoadConfig(name string, configStruct interface{}) {
 	cfg = getConfig()
 
@@ -77,7 +79,10 @@ func LoadConfig(name string, configStruct interface{}) {
 	if !ok {
 		panic(fmt.Errorf("key (%s) not found in config file (%s)", name, cfg.getConfigFile()))
 	}
-	json.Unmarshal(configData, &configStruct)
+	err := json.Unmarshal(configData, &configStruct)
+	if err != nil {
+		panic(fmt.Errorf("unable to unmarchal %v into %v: %s", configData, configStruct, err))
+	}
 }
 
 // #1 https://www.sohamkamani.com/golang/json/

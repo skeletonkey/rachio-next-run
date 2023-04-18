@@ -8,17 +8,25 @@ import (
 	"rachionextrun/app/logger"
 )
 
+// Notify sends `msg` using the Pushover API
 func Notify(msg string) {
 	client := getConfig()
 	log := logger.Get()
-	requestUrl := fmt.Sprintf("%s/messages.json?token=%s&user=%s&message=%s",
-		client.Url, client.Token.Account, client.Token.Application, url.QueryEscape(msg))
-	log.Debug().Str("URL", requestUrl).Msg("notification URL")
-	res, err := http.Post(requestUrl, "application/json", nil)
+	requestURL := fmt.Sprintf("%s/messages.json?token=%s&user=%s&message=%s",
+		client.URL, client.Token.Account, client.Token.Application, url.QueryEscape(msg))
+	log.Debug().Str("URL", requestURL).Msg("notification URL")
+	res, err := http.Post(requestURL, "application/json", nil)
 	if err != nil {
-		log.Panic().Err(err).Str("URL", requestUrl).Msg("unable to post to url")
+		log.Panic().Err(err).Str("URL", requestURL).Msg("unable to post to url")
 	}
-	defer res.Body.Close()
+	defer func() {
+		err := res.Body.Close()
+		if err != nil {
+			log.Error().
+				Err(err).
+				Msg("unable to close response body")
+		}
+	}()
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
 		log.Panic().Err(err).Interface("response", res).Msg("unable to read response body")

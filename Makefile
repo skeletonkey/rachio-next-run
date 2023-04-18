@@ -1,6 +1,7 @@
 build:
 	go fmt ./...
 	go vet ./...
+	golangci-lint run
 	go build -o bin/rachio-next-run app/*.go
 
 install:
