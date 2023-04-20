@@ -3,10 +3,11 @@ package main
 
 import (
 	"fmt"
-	"rachionextrun/app/config"
-	"rachionextrun/app/logger"
-	"rachionextrun/app/pushover"
-	"rachionextrun/app/rachio"
+
+	"github.com/skeletonkey/rachio-next-run/app/config"
+	"github.com/skeletonkey/rachio-next-run/app/logger"
+	"github.com/skeletonkey/rachio-next-run/app/pushover"
+	"github.com/skeletonkey/rachio-next-run/app/rachio"
 )
 
 type app struct {

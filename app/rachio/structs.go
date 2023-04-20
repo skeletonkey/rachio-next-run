@@ -10,6 +10,7 @@ type device struct {
 	Hours map[string]int `json:"hours"`
 }
 type rachio struct {
+	Enabled     bool     `json:"enabled"`
 	URL         url      `json:"url"`
 	BearerToken string   `json:"bearer_token"`
 	Devices     []device `json:"devices"`

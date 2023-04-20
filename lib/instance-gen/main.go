@@ -12,6 +12,7 @@ import (
 )
 
 const templateDir = "lib/instance-gen/templates"
+const templateExt = ".go.tpl"
 const warning = "// instance-gen: File auto generated -- DO NOT EDIT!!!\n"
 
 // App struct containing necessary information for a new application
@@ -23,15 +24,16 @@ type App struct {
 func NewApp(dir string) App {
 	return App{dir: dir}
 }
-func (a App) WithClients(clientNames ...string) App {
-	for _, name := range clientNames {
-		a.generateTemplate("client", name)
+
+func (a App) WithModules(moduleNames ...string) App {
+	for _, name := range moduleNames {
+		a.generateTemplate("config", name)
 	}
 	return a
 }
 
 func (a App) generateTemplate(templateName string, clientName string) {
-	inputFileName := path.Join(templateDir, templateName+".go.tpl")
+	inputFileName := path.Join(templateDir, templateName+templateExt)
 	outputDir := path.Join(a.dir, clientName)
 	outputFileName := path.Join(outputDir, templateName+".go")
 

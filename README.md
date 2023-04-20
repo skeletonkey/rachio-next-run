@@ -22,9 +22,21 @@ Location of your config JSON file.
 
 An example config is located at: `config/local.json`.
 
-## Config Variables
+## Configurations
 
 At this time 'secrets' are written directly into the config file.  It is _HIGHLY_ recommended that you make a copy of `config/local.json` and place it somewhere outside of the repo.
+
+Configuration allows for 'hot reloading'. If you change the configuration it should be live within 15 seconds.
+
+Hot Reloading things to know:
+
+* changing configs for logging doesn't have the desired effect
+  * recommend not to change these settings
+    * if changes are made restart the service
+  * bug report (entry in the TODO file) has been submitted
+* if the config is messed up (like breaking the JSON) it will cause the program to panic
+  * recommended not to use an editor that autosaves without linting
+  * bug report has been submitted
 
 ### Pushover.net
 

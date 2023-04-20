@@ -3,11 +3,9 @@ package main
 
 //go:generate go run app-init.go
 
-import (
-	instance_gen "rachionextrun/lib/instance-gen"
-)
+import instance_gen "github.com/skeletonkey/rachio-next-run/lib/instance-gen"
 
 func main() {
 	app := instance_gen.NewApp("app")
-	app.WithClients("logger", "pushover", "rachio")
+	app.WithModules("logger", "pushover", "rachio")
 }
