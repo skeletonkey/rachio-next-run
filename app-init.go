@@ -7,5 +7,6 @@ import instance_gen "github.com/skeletonkey/rachio-next-run/lib/instance-gen"
 
 func main() {
 	app := instance_gen.NewApp("app")
-	app.WithModules("logger", "pushover", "rachio")
+	app.WithPackages("logger", "pushover", "rachio").
+		WithGithubWorkflows("linter", "test")
 }
