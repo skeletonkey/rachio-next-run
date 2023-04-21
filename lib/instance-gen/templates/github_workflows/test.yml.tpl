@@ -1,4 +1,3 @@
-# instance-gen: File auto generated -- DO NOT EDIT!!!
 name: tests
 
 on:
