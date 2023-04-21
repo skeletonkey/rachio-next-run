@@ -11,6 +11,7 @@
 * make rachio only a 'device' interface
 * create an 'alerts' package that deals with figuring out what alert is triggered and what the alter looks like
 * make pushover a 'transport'??? interface
+* investigate linting on each push and not just the PR
 
 ### In progress
 * Add Healthcheck - investigate `buildinfo` in logger module -- `healthcheck` branch
