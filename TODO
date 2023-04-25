@@ -3,8 +3,6 @@
 ## Bugs
 
 * fix app/logger in-memory replacement issue - see TODO comment in Initialize method
-* do we have to 'register' Initializers??? Should we be able to say Initialize if you're an Initializer
-* if someone breaks the config file while things are running we should be logging the errors and not panicking
 
 ## Feature
 

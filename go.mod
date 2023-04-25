@@ -5,7 +5,8 @@ go 1.20
 require (
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/rs/zerolog v1.29.0
-	github.com/skeletonkey/lib-instance-gen-go v0.1.0
+	github.com/skeletonkey/lib-core-go v0.1.0
+	github.com/skeletonkey/lib-instance-gen-go v0.1.2
 )
 
 require (

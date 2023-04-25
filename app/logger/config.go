@@ -1,7 +1,7 @@
-// instance-gen: File auto generated -- DO NOT EDIT!!!
+// lib-instance-gen-go: File auto generated -- DO NOT EDIT!!!
 package logger
 
-import "github.com/skeletonkey/rachio-next-run/app/config"
+import "github.com/skeletonkey/lib-core-go/config"
 
 var cfg *logger
 
