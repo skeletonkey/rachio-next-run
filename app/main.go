@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/skeletonkey/lib-core-go/config"
-	"github.com/skeletonkey/rachio-next-run/app/logger"
+	"github.com/skeletonkey/lib-core-go/logger"
 	"github.com/skeletonkey/rachio-next-run/app/pushover"
 	"github.com/skeletonkey/rachio-next-run/app/rachio"
 )
