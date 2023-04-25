@@ -10,7 +10,7 @@ import (
 	"github.com/natefinch/lumberjack"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/pkgerrors"
-	"github.com/skeletonkey/rachio-next-run/app/config"
+	"github.com/skeletonkey/lib-core-go/config"
 )
 
 var log *zerolog.Logger

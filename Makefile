@@ -1,4 +1,6 @@
-// instance-gen: File auto generated -- DO NOT EDIT!!!
+// lib-instance-gen-go: File auto generated -- DO NOT EDIT!!!
+.DEFAULT_GOAL=build
+
 build:
 	go fmt ./...
 	go vet ./...
@@ -8,6 +10,7 @@ install:
 	cp bin/rachio-next-run /usr/local/sbin/rachio-next-run
 
 golib-latest:
+	go get -u github.com/skeletonkey/lib-core-go@latest
 	go get -u github.com/skeletonkey/lib-instance-gen-go@latest
 
 	go mod tidy
