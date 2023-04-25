@@ -7,7 +7,7 @@ import instance_gen "github.com/skeletonkey/lib-instance-gen-go/app"
 
 func main() {
 	app := instance_gen.NewApp("rachio-next-run", "app")
-	app.WithPackages("logger", "pushover", "rachio").
+	app.WithPackages("pushover", "rachio").
 		WithGithubWorkflows("linter", "test").
 		WithMakefile()
 }

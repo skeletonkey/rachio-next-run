@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/skeletonkey/rachio-next-run/app/logger"
+	"github.com/skeletonkey/lib-core-go/logger"
 )
 
 // Notify sends `msg` using the Pushover API
