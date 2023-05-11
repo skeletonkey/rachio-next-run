@@ -5,6 +5,7 @@ go 1.20
 require (
 	github.com/skeletonkey/lib-core-go v0.2.0
 	github.com/skeletonkey/lib-instance-gen-go v0.1.2
+	github.com/skeletonkey/rachio v0.0.3
 )
 
 require (

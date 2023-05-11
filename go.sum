@@ -20,6 +20,8 @@ github.com/skeletonkey/lib-core-go v0.2.0 h1:vA5l4IOMxlN1DoEga6Nl5sNpdKsNqzKDWUb
 github.com/skeletonkey/lib-core-go v0.2.0/go.mod h1:yavVmeeczzuAWhRrpbvipiDOufC/lkDQP28umR22068=
 github.com/skeletonkey/lib-instance-gen-go v0.1.2 h1:wd+lL0yL8BvKqFQqyS/0B/mkcT3k3WSgSHhTtKWz8lo=
 github.com/skeletonkey/lib-instance-gen-go v0.1.2/go.mod h1:hZ7l8sK0ViPMiaie4xRCArCICEK932UMOmcYLifgAmU=
+github.com/skeletonkey/rachio v0.0.3 h1:UVN3zsZ38TFMJblsq/0CjPa8QMsvQiMrMmc7s7kKEHc=
+github.com/skeletonkey/rachio v0.0.3/go.mod h1:oX3bfiQVrGVdWX4WZ6mZIwvAphavkvG4H7qYAttnOBc=
 golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.0.0-20210927094055-39ccf1dd6fa6/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.0.0-20220811171246-fbc7d0a398ab/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
