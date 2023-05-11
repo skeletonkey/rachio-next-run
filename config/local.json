@@ -9,10 +9,6 @@
     "to_stdout": true
   },
   "rachio" : {
-    "url": {
-      "public": "https://api.rach.io/1/public",
-      "internal": "https://cloud-rest.rach.io"
-    },
     "bearer_token": "TOKEN GOES HERE",
     "devices": [
       {

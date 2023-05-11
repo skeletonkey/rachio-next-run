@@ -1,9 +1,5 @@
 package rachio
 
-type url struct {
-	Public   string `json:"public"`
-	Internal string `json:"internal"`
-}
 type device struct {
 	Name  string         `json:"name"`
 	ID    string         `json:"device_id"`
@@ -11,7 +7,6 @@ type device struct {
 }
 type rachio struct {
 	Enabled     bool     `json:"enabled"`
-	URL         url      `json:"url"`
 	BearerToken string   `json:"bearer_token"`
 	Devices     []device `json:"devices"`
 }
