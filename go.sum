@@ -16,10 +16,10 @@ github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINE
 github.com/rs/xid v1.4.0/go.mod h1:trrq9SKmegXys3aeAKXMUTdJsYXVwGY3RLcfgqegfbg=
 github.com/rs/zerolog v1.29.1 h1:cO+d60CHkknCbvzEWxP0S9K6KqyTjrCNUy1LdQLCGPc=
 github.com/rs/zerolog v1.29.1/go.mod h1:Le6ESbR7hc+DP6Lt1THiV8CQSdkkNrd3R0XbEgp3ZBU=
-github.com/skeletonkey/lib-core-go v0.2.0 h1:vA5l4IOMxlN1DoEga6Nl5sNpdKsNqzKDWUbsJcWY33g=
-github.com/skeletonkey/lib-core-go v0.2.0/go.mod h1:yavVmeeczzuAWhRrpbvipiDOufC/lkDQP28umR22068=
-github.com/skeletonkey/lib-instance-gen-go v0.1.2 h1:wd+lL0yL8BvKqFQqyS/0B/mkcT3k3WSgSHhTtKWz8lo=
-github.com/skeletonkey/lib-instance-gen-go v0.1.2/go.mod h1:hZ7l8sK0ViPMiaie4xRCArCICEK932UMOmcYLifgAmU=
+github.com/skeletonkey/lib-core-go v0.2.1 h1:TtdXJSy+KH0CulbgUeI9ltqQn5jNJP6czoIHqMN2uPI=
+github.com/skeletonkey/lib-core-go v0.2.1/go.mod h1:9VlmZJ6PXNFiyv/IEPy8VB0a4YllmoyaMITjmUINYXQ=
+github.com/skeletonkey/lib-instance-gen-go v0.3.0 h1:i9PcQ3RZgPZ+QNcwcDoKn/G25gx8Ky7dBjqp6YNQp8c=
+github.com/skeletonkey/lib-instance-gen-go v0.3.0/go.mod h1:h0G3H23qMevMW5jcCe20rpxWdP8FG4jhVsIXe5AGqCk=
 github.com/skeletonkey/rachio v0.0.3 h1:UVN3zsZ38TFMJblsq/0CjPa8QMsvQiMrMmc7s7kKEHc=
 github.com/skeletonkey/rachio v0.0.3/go.mod h1:oX3bfiQVrGVdWX4WZ6mZIwvAphavkvG4H7qYAttnOBc=
 golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
